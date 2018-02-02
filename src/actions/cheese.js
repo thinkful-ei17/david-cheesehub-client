@@ -36,13 +36,13 @@ export const addCheeseRequest = () => ({
 })
 
 export const ADD_CHEESE_SUCCESS = 'ADD_CHEESE_SUCCESS';
-export const addCheeseSuccess = () => ({
+export const addCheeseSuccess = cheese => ({
   type: ADD_CHEESE_SUCCESS,
   cheese
 })
 
 export const ADD_CHEESE_ERROR = 'ADD_CHEESE_ERROR';
-export const addCheeseError = () => ({
+export const addCheeseError = error => ({
   type: ADD_CHEESE_ERROR,
   error
 })
@@ -55,7 +55,7 @@ export const addCheese = cheese => dispatch => {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     },
-    body: JSON.stringify(cheese)
+    body: JSON.stringify({name: cheese})
   })
   .then(res => {
     if (!res.ok) {

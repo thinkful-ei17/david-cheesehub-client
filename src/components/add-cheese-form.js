@@ -1,18 +1,19 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {addCheese} from '../actions.cheese';
+import {addCheese} from '../actions/cheese';
 
 export class AddCheeseForm extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     const cheese = this.input.value;
     this.props.dispatch(addCheese(cheese));
+    this.input.value = '';
   }
 
   render() {
 
     return (
-      <form className='add-cheese-form' onSubmit={e=>this.onSubmit}>
+      <form className='add-cheese-form' onSubmit={e=>this.onSubmit(e)}>
         <input type="text" ref={input => this.input = input} />
         <button>Add Cheese</button>
       </form>
