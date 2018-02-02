@@ -20,12 +20,49 @@ export const fetchCheesesError = error => ({
 export const fetchCheeses = () => dispatch => {
   dispatch(fetchCheesesRequest());
   fetch(`${API_BASE_URL}/cheeses`)
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject('Something went wrong')
-      }
-      return res.json();
-    })
-    .then(cheeses => dispatch(fetchCheesesSucess(cheeses)))
-    .catch(error => dispatch(fetchCheeses(error)));
+  .then(res => {
+    if (!res.ok) {
+      return Promise.reject('Something went wrong')
+    }
+    return res.json();
+  })
+  .then(cheeses => dispatch(fetchCheesesSucess(cheeses)))
+  .catch(error => dispatch(fetchCheeses(error)));
 };
+
+export const ADD_CHEESE_REQUEST = 'ADD_CHEESE_REQUEST';
+export const addCheeseRequest = () => ({
+  type: ADD_CHEESE_REQUEST
+})
+
+export const ADD_CHEESE_SUCCESS = 'ADD_CHEESE_SUCCESS';
+export const addCheeseSuccess = () => ({
+  type: ADD_CHEESE_SUCCESS,
+  cheese
+})
+
+export const ADD_CHEESE_ERROR = 'ADD_CHEESE_ERROR';
+export const addCheeseError = () => ({
+  type: ADD_CHEESE_ERROR,
+  error
+})
+
+export const addCheese = cheese => dispatch => {
+  dispatch(addCheeseRequest());
+  fetch(`${API_BASE_URL}/cheeses`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(cheese)
+  })
+  .then(res => {
+    if (!res.ok) {
+      return Promise.reject('Something went wrong')
+    }
+    return res.json()
+  })
+  .then(cheese => dispatch(addCheeseSuccess(cheese)))
+  .catch(error => dispatch(addCheeseError(error)))
+}
