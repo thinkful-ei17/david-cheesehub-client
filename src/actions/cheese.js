@@ -6,13 +6,13 @@ export const fetchCheesesRequest = () => ({
 })
 
 export const FETCH_CHEESES_SUCCESS = 'FETCH_CHEESES_SUCCESS';
-export const fetchCheesesSucess = (cheeses) => ({
+export const fetchCheesesSucess = cheeses => ({
   type: FETCH_CHEESES_SUCCESS,
   cheeses
 })
 
 export const FETCH_CHEESES_ERROR = 'FETCH_CHEESES_ERROR';
-export const fetchCheesesError = (error) => ({
+export const fetchCheesesError = error => ({
   type: FETCH_CHEESES_ERROR,
   error
 })
@@ -24,13 +24,8 @@ export const fetchCheeses = () => dispatch => {
       if (!res.ok) {
         return Promise.reject('Something went wrong')
       }
-      console.log(res);
       return res.json();
     })
-    .then(cheeses => {
-      dispatch(fetchCheesesSucess(cheeses))
-    })
-    .catch(error => {
-      dispatch(fetchCheeses(error))
-    });
+    .then(cheeses => dispatch(fetchCheesesSucess(cheeses)))
+    .catch(error => dispatch(fetchCheeses(error)));
 };
